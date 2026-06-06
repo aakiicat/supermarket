@@ -18,6 +18,9 @@ def load_config():
     if "credentials" in st.secrets:
         return st.secrets.to_dict()
     config_path = Path(__file__).parent / "config.yaml"
+    if not config_path.exists():
+        st.error("找不到帳號設定。請在 Streamlit Cloud → App settings → Secrets 填入帳號資訊。")
+        st.stop()
     with open(config_path, encoding="utf-8") as f:
         return yaml.load(f, Loader=SafeLoader)
 
