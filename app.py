@@ -13,11 +13,15 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ── 載入帳號設定 ──────────────────────────────────────────────────────────────
-CONFIG_PATH = Path(__file__).parent / "config.yaml"
+# ── 載入帳號設定（Streamlit Cloud 用 st.secrets，本機用 config.yaml）──────────
+def load_config():
+    if "credentials" in st.secrets:
+        return st.secrets.to_dict()
+    config_path = Path(__file__).parent / "config.yaml"
+    with open(config_path, encoding="utf-8") as f:
+        return yaml.load(f, Loader=SafeLoader)
 
-with open(CONFIG_PATH, encoding="utf-8") as f:
-    config = yaml.load(f, Loader=SafeLoader)
+config = load_config()
 
 authenticator = stauth.Authenticate(
     config["credentials"],
