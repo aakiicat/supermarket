@@ -1,0 +1,13 @@
+# 帳號設定（含密碼）不上傳
+config.yaml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# 系統檔
+.DS_Store
+Thumbs.db
